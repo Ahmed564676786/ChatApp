@@ -1,4 +1,3 @@
-const { Socket } = require('dgram');
 const express = require('express');
 const http  = require('http');
 const socketio = require('socket.io');
@@ -19,10 +18,13 @@ const io = socketio(server,{
 });
 
 
+// calling routes 
+
+app.use('/api',)
+
 app.use('/',(req,res,next)=>{
 
     console.log('Hello from the server');
-
     res.send('Home Page')
 });
 
