@@ -1,6 +1,6 @@
 // controllers/userController.js
 
-import { addUser, getUser, removeUser } from "../models/userModel.js";
+import { addUser, getUser, removeUser } from "../models/users.js";
 
 // ==============================
 // ➕ ADD USER (API)
