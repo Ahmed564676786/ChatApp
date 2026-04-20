@@ -1,19 +1,19 @@
 // controllers/userController.js
 
-import { addUser, getUser, removeUser } from "../models/users.js";
+import { addUser, getUserById, removeUser } from "../models/users.js";
 
 // ==============================
 // ➕ ADD USER (API)
 // ==============================
 export const createUser = (req, res) => {
   try {
-    const { id, name } = req.body;
+    const { id, name ,socketId,isOnline} = req.body;
 
     const newUser = {
       id,
       name,
-      socketId: null,
-      isOnline: false
+      socketId,
+      isOnline,
     };
 
     addUser(newUser);
@@ -31,11 +31,11 @@ export const createUser = (req, res) => {
 // ==============================
 // 🔍 GET USER BY ID
 // ==============================
-export const fetchUser = (req, res) => {
+export const fetchUserById = (req, res) => {
   try {
     const { id } = req.params;
 
-    const user = getUser(id);
+    const user = getUserById(id);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

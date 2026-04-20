@@ -1,7 +1,5 @@
 // config/swagger.js
-
-const swaggerJSDoc = require("swagger-jsdoc");
-
+import swaggerJSDoc from "swagger-jsdoc";
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -11,10 +9,8 @@ const options = {
       description: "Chat App API Docs"
     }
   },
-
-  // 🔥 IMPORTANT (path fix)
   apis: ["./routes/*.js"]
 };
 
 const swaggerSpec = swaggerJSDoc(options);
-
+export default swaggerSpec;

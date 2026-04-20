@@ -20,7 +20,7 @@ export const addUser = (user) => {
 };
 
 // Get user by ID
-export const getUser = (id) => {
+export const getUserById = (id) => {
   return users.find(u => u.id === id);
 };
 

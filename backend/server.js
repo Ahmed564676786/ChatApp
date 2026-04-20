@@ -1,11 +1,13 @@
 // server.js
-
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import swaggerUi from "swagger-ui-express";
-
-import swaggerSpec from "./config/swagger.js";
+import swaggerSpec from "./config/swaggerSpec.js";
+// ==============================
+// ROUTES
+// ==============================
+import userRoutes from "./routes/userRoutes.js";
 
 const port = 3000;
 const app = express();
@@ -25,15 +27,10 @@ const io = new Server(server, {
   }
 });
 
-// ==============================
-// ROUTES
-// ==============================
-import userRoutes from "./routes/userRoutes.js";
-
 app.use("/api", userRoutes);
 
 // Swagger
-app.use("/api/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Home route
 app.get("/", (req, res) => {

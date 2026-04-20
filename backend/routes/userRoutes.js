@@ -1,7 +1,11 @@
 // routes/userRoutes.js
 
 import express from "express";
-import { createUser, fetchUser, deleteUser } from "../controllers/userController.js";
+import {
+  createUser,
+  fetchUserById,
+  deleteUser
+} from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -20,6 +24,7 @@ const router = express.Router();
  *             required:
  *               - id
  *               - name
+ *               - socketId
  *             properties:
  *               id:
  *                 type: string
@@ -27,6 +32,12 @@ const router = express.Router();
  *               name:
  *                 type: string
  *                 example: "Ahmed"
+ *               socketId:
+ *                 type: string
+ *                 example: "abc123"
+ *               isOnline:
+ *                 type: boolean
+ *                 example: true
  *     responses:
  *       201:
  *         description: User created successfully
@@ -49,14 +60,31 @@ router.post("/user", createUser);
  *     responses:
  *       200:
  *         description: User found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: "1"
+ *                 name:
+ *                   type: string
+ *                   example: "Ahmed"
+ *                 socketId:
+ *                   type: string
+ *                   example: "abc123"
+ *                 isOnline:
+ *                   type: boolean
+ *                   example: true
  *       404:
  *         description: User not found
  */
-router.get("/user/:id", fetchUser);
+router.get("/user/:id", fetchUserById);
 
 /**
  * @swagger
- * /api/user/{socketId}:
+ * /api/user/socket/{socketId}:
  *   delete:
  *     summary: Delete user by socket ID
  *     tags: [Users]
@@ -69,10 +97,10 @@ router.get("/user/:id", fetchUser);
  *           example: "abc123"
  *     responses:
  *       200:
- *         description: User deleted
+ *         description: User deleted successfully
  *       404:
  *         description: User not found
  */
-router.delete("/user/:socketId", deleteUser);
+router.delete("/user/socket/:socketId", deleteUser);
 
 export default router;
