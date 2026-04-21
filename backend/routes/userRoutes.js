@@ -4,7 +4,8 @@ import express from "express";
 import {
   createUser,
   fetchUserById,
-  deleteUser
+  deleteUserBySocketId,
+  deleteUserByUserId
 } from "../controllers/userController.js";
 
 const router = express.Router();
@@ -101,6 +102,44 @@ router.get("/user/:id", fetchUserById);
  *       404:
  *         description: User not found
  */
-router.delete("/user/socket/:socketId", deleteUser);
+router.delete("/user/socket/:socketId", deleteUserBySocketId);
+
+
+
+
+
+/**
+ * @swagger
+ * /api/user/user/{userId}:
+ *   delete:
+ *     summary: Delete a user by userId
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         description: ID of the user to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: User deleted successfully
+ *               user:
+ *                 id: "1"
+ *                 name: "Ahmed"
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: User not found
+ *       500:
+ *         description: Server error
+ */
+router.delete('/user/:userId',deleteUserByUserId);
 
 export default router;

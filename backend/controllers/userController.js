@@ -1,6 +1,6 @@
 // controllers/userController.js
 
-import { addUser, getUserById, removeUser } from "../models/users.js";
+import { addUser, getUserById,removeUserBySocketId,removeUserByUserId } from "../models/users.js";
 
 // ==============================
 // ➕ ADD USER (API)
@@ -8,7 +8,6 @@ import { addUser, getUserById, removeUser } from "../models/users.js";
 export const createUser = (req, res) => {
   try {
     const { id, name ,socketId,isOnline} = req.body;
-
     const newUser = {
       id,
       name,
@@ -51,7 +50,7 @@ export const fetchUserById = (req, res) => {
 // ==============================
 // ❌ REMOVE USER (API)
 // ==============================
-export const deleteUser = (req, res) => {
+export const deleteUserBySocketId = (req, res) => {
   try {
     const { socketId } = req.params;
 
@@ -70,3 +69,33 @@ export const deleteUser = (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
+// middleware functions 
+
+
+export const deleteUserByUserId = (req,res) => {
+
+    const   userId = req.params;
+    const removedUser  = removeUserByUserId(userId);
+    try{
+
+      if(!removedUser){
+
+         res.status(404).json({error:"User not found"});
+      }
+
+      //below code will only run if there is user 
+
+      res.json({
+          message:"Deleted User",
+          user : removedUser
+      });
+          
+    }
+    catch(err)
+    {
+
+        res.status(500).json({message:err.message});
+    }
+}

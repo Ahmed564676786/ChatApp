@@ -25,9 +25,17 @@ export const getUserById = (id) => {
 };
 
 // Remove user
-export const removeUser = (socketId) => {
-  const index = users.findIndex(u => u.socketId === socketId);
+export const removeUserBySocketId = (socketId) => {
+  const index = users.findIndex(u => u.socketId === socketId);  // -1 not found
   if (index !== -1) {
     return users.splice(index, 1);
   }
+};
+
+export const removeUserByUserId = (userId) => {
+  const index = users.findIndex(user => user.id === userId);
+  if (index === -1) return null; // user not found
+  const removedUser = users[index];
+  users = users.filter(user => user.id !== userId);
+  return removedUser;
 };
